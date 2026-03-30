@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEWN | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+:root{
+    --bg:#0a0a0a;
+    --pink:#ff6b9d;
+    --soft:#ffc0cb;
+    --text:#ffffff;
+    --card:#111;
+}
+
+/* BODY + BACKGROUND */
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    color:var(--text);
+    overflow-x:hidden;
+    background:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)),
+    url('https://i.pinimg.com/originals/20/28/bb/2028bb9247bea3386054be286e55770b.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Pink glow layer */
+body::after{
+    content:"";
+    position:fixed;
+    width:40vw;
+    height:40vw;
+    background:var(--pink);
+    filter:blur(200px);
+    top:-100px;
+    left:-100px;
+    opacity:.25;
+    z-index:-1;
+}
+
+/* HERO */
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.hero h1{
+    font-family:'Playfair Display', serif;
+    font-size:6rem;
+    color:var(--pink);
+    margin-bottom: 0;
+}
+
+.hero p{
+    opacity:.8;
+    letter-spacing:1.5px;
+    margin-top:10px;
+    font-size:1.2rem;
+}
+
+/* Увеличенное ГЛАВНОЕ ФОТО (Hero Photo Box) */
+.photo-box {
+    display: table;
+    width: 90%;                /* Для гибкости на малых экранах */
+    max-width: 480px;          /* Логичный размер: достаточно крупно, но не перекрывает текст */
+    height: auto;
+    border: 2px dashed var(--pink);
+    margin: 50px auto;         /* Увеличен отступ, чтобы блоки не лезли друг на друга */
+    border-radius: 30px;
+    padding: 10px;
+    line-height: 0;
+    position: relative;
+    background: rgba(255, 107, 157, 0.03);
+    
+    /* МНОГОСЛОЙНОЕ СВЕЧЕНИЕ СНИЗУ */
+    /* Первая тень — четкая у края, вторая — широкое мягкое облако розового цвета */
+    box-shadow: 
+        0 20px 50px -15px rgba(255, 107, 157, 0.5), 
+        0 10px 20px -10px rgba(255, 107, 157, 0.3);
+    
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* 1. Исправляем главный контейнер: убираем 100vh, чтобы фото не лезло на блоки */
+.hero {
+    min-height: 100vh;         /* Было height: 100vh. min-height позволит блоку расти вниз */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 20px;        /* Добавили отступы сверху и снизу */
+}
+
+
+/* ГЛАВНОЕ ФОТО: Тонкая линия вплотную и розовое свечение */
+.photo-box {
+    width: 90%;
+    max-width: 520px;          /* Большая ширина */
+    margin: 60px auto;         /* Отступ от текста и следующего блока */
+    
+    /* Тонкая розовая линия как в остальных карточках */
+    border: 2px solid var(--pink); 
+    border-radius: 30px;       /* Скругление рамки */
+    
+    overflow: hidden;          /* Чтобы фото не вылезало за скругленные углы */
+    line-height: 0;            /* Убирает зазор снизу под фото */
+    padding: 0;                /* Убираем внутренний отступ, фото прилипнет к линии */
+    
+    background: var(--card);   /* Фон как у карточек */
+    
+    /* СВЕЧЕНИЕ СНИЗУ */
+    box-shadow: 0 25px 60px -15px rgba(255, 107, 157, 0.8);
+    
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.photo-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 35px 75px -10px rgba(255, 107, 157, 0.9);
+}
+
+.photo-box img {
+    width: 100%;
+    height: auto;
+    display: block;            /* Убирает лишние отступы */
+    object-fit: cover;         /* Фото четко заполняет контейнер */
+}
+
+.three-lines {
+    max-width: 700px;
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 1.05rem;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+/* SECTIONS (GLASS EFFECT) */
+section{
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:30px;
+    margin:40px auto;
+    padding:80px 40px;
+    max-width:1200px;
+    transition:0.3s;
+}
+
+section:hover{
+    background:rgba(0,0,0,0.55);
+}
+
+/* HEADINGS */
+h2{
+    font-family:'Playfair Display', serif;
+    font-size:2.5rem;
+    color:var(--pink);
+    margin-bottom:30px;
+}
+
+/* CARDS */
+.card{
+    background:var(--card);
+    border:2px solid var(--pink);
+    padding:30px;
+    margin-bottom:20px;
+    cursor:pointer;
+    transition:.3s;
+    position:relative;
+    border-radius:30px;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 20px var(--pink);
+}
+
+.card-content{
+    max-height:0;
+    overflow:hidden;
+    transition:.6s;
+    opacity:0;
+}
+
+.card.active .card-content{
+    max-height:1000px;
+    opacity:1;
+    margin-top:10px;
+}
+
+/* 1. Для обычных карточек (Science, Art, IT, Writing) */
+/* Теперь рамка будет ровно по формату фото, без приближения */
+.card-image {
+    width: 100%;
+    height: auto;           /* Высота подстроится под оригинал фото */
+    max-height: 500px;      /* Ограничение, чтобы слишком длинные фото не ломали сетку */
+    object-fit: contain;    /* Фото видно целиком */
+    border-radius: 20px;
+    margin-top: 15px;
+    border: 1px solid var(--pink);
+    display: block;
+}
+
+/* 2. Для HOBBIES (Слайдеры) */
+/* Оставляем фиксированную высоту и заполнение, как ты хотел */
+.hobby-card .slider-viewport {
+    width: 100%;
+    height: 320px;          /* Фиксированная высота для слайдера */
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+}
+
+.hobby-card .slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* Здесь фото по-прежнему заполняет весь прямоугольник */
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+}
+
+.hobby-card .slide.active {
+    opacity: 1;
+}
+
+
+/* TAG */
+.tag{
+    display:inline-block;
+    background:var(--pink);
+    color:#000;
+    padding:5px 12px;
+    margin-top:10px;
+    font-size:.75rem;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+/* ANIMATION FADE */
+.fade{
+    opacity:0;
+    transform:translateY(40px);
+}
+
+/* --- Адаптивность --- */
+@media (max-width:768px){
+    .hero h1{ font-size:4rem; }
+    section{ padding:60px 20px; }
+    .photo-box{ width:200px; height:250px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero fade">
+    <h1>WHO IS VEWN?</h1>
+    <p class="three-lines">
+        Whether we like to admit it or not,<br>
+        we decide if we like someone, if we trust someone,<br>
+        and if we want a relationship within the first few seconds.
+    </p>
+    <div class="photo-box">
+        <img src="main2.jpeg" alt="Azhar">
+    </div>
+</div>
+
+<section class="fade">
+<h2>About Me</h2>
+<p style="font-size:1.05rem;">
+I am Manabay Azhar (VEWN), a multidisciplinary and creatively driven student from Kazakhstan with a strong interest in both fashion and psychology. I combine analytical thinking with artistic vision, exploring innovative ideas and personal growth.
+</p>
+<p style="font-size:1.05rem;">
+Currently preparing for higher education in Spain while studying Spanish to expand my international perspective and creative horizons.
+</p>
+</section>
+
+<section class="fade">
+<h2>Science & Psychology</h2>
+<div class="grid">
+    <div class="card">
+        <strong>Research Project (2025–2026)</strong>
+        <div class="card-content">
+            <p>“Attachment styles and their influence on personality development and interpersonal relationships”</p>
+            <p>Reviewed by Master of Philology, Senior Lecturer Kozhanova A.Ye.</p>
+            <p>Developed own attachment test: “Love-to-Be-Loved” & “Learning Security”</p>
+            <p>Applied Bowlby & Ainsworth theories independently at Skillset Schools</p>
+            <img src="foto1.jpeg" class="card-image" alt="Research">
+            <span class="tag">Psychology</span>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="fade">
+<h2>Digital Art & IT</h2>
+<div class="grid">
+    <div class="card">
+        <strong>Concept Art (ANIMO Academy, 2024)</strong>
+        <div class="card-content">
+            <p>144 academic hours, character design and textures</p>
+            <img src="foto2.jpeg" class="card-image" alt="Concept Art">
+            <span class="tag">Art</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Digital Drawing & 2D Animation (ANIMO Academy, 2024)</strong>
+        <div class="card-content">
+            <p>Procreate course, mastering drawing and animation skills</p>
+            <img src="foto3.jpeg" class="card-image" alt="2D Animation">
+            <span class="tag">Art</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Animation Course (2025)</strong>
+        <div class="card-content">
+            <p>20 principles of movement & timing</p>
+            <img src="foto4.jpeg" class="card-image" alt="Animation">
+            <span class="tag">Animation</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Web Development</strong>
+        <div class="card-content">
+            <p>Interactive interfaces, task managers, calculators using HTML, CSS & JS</p>
+            <img src="foto5.jpeg" class="card-image" alt="Web Dev">
+            <span class="tag">IT</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Costume Contest (AiPlus)</strong>
+        <div class="card-content">
+            <p>II place — best costume, creative execution</p>
+            <img src="foto6.jpeg" class="card-image" alt="Costume">
+            <span class="tag">Creative</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Road Safety Drawing (2017)</strong>
+        <div class="card-content">
+            <p>I place — early recognition of artistic talent</p>
+            <img src="foto7.jpeg" class="card-image" alt="Drawing">
+            <span class="tag">Art</span>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="fade">
+<h2>Sports & Athletics</h2>
+<div class="grid">
+    <div class="card">
+        <strong>Fencing — Candidate for Master of Sport (2025)</strong>
+        <div class="card-content">
+            <p>Recognized as KMS in fencing</p>
+            <img src="foto8.jpeg" class="card-image" alt="Fencing">
+            <span class="tag">Fencing</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Fencing — 3rd Place (2024)</strong>
+        <div class="card-content">
+            <p>Open Championship, Karaganda</p>
+            <img src="foto9.jpeg" class="card-image" alt="Fencing Karaganda">
+            <span class="tag">Fencing</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Karate — 2nd Place (2018)</strong>
+        <div class="card-content">
+            <p>Shinkyokushinkai, Kumite, Karasay District Championship</p>
+            <img src="foto10.jpeg" class="card-image" alt="Karate">
+            <span class="tag">Karate</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Karate — 2nd Place Regional Cup</strong>
+        <div class="card-content">
+            <p>Alanyard Club, Astana</p>
+            <img src="foto11.jpeg" class="card-image" alt="Karate Cup">
+            <span class="tag">Karate</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Karate 7th Kyu Certificate (2017)</strong>
+        <div class="card-content">
+            <p>Federation of Karate Kazakhstan</p>
+            <img src="foto12.jpeg" class="card-image" alt="Karate Cert">
+            <span class="tag">Karate</span>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="fade">
+<h2>Performance & Creative</h2>
+<div class="grid">
+    <div class="card">
+        <strong>Eastern Dance — 1st Place (2015)</strong>
+        <div class="card-content">
+            <p>Bagira Festival, Almaty — group/classical formation</p>
+            <img src="foto13.jpeg" class="card-image" alt="Dance">
+            <span class="tag">Dance</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Choreography Certificate (2026)</strong>
+        <div class="card-content">
+            <p>Janet Dance House, Astana — participation in annual performance</p>
+            <img src="foto14.jpeg" class="card-image" alt="Choreography">
+            <span class="tag">Dance</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Vocal — 2nd Place (2016)</strong>
+        <div class="card-content">
+            <p>Regional Children’s Festival “Sälem, Alatau!”</p>
+            <img src="foto15.jpeg" class="card-image" alt="Vocal">
+            <span class="tag">Music</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Vocal — 3rd Place International</strong>
+        <div class="card-content">
+            <p>Youth Festival, Almaty</p>
+            <img src="foto16.jpeg" class="card-image" alt="Vocal Int">
+            <span class="tag">Music</span>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="fade">
+<h2>Languages & Literature</h2>
+
+        </div>
+    </div>
+    <div class="card">
+        <strong>IELTS Preparation (2025)</strong>
+        <div class="card-content">
+            <p>6-week intensive academic course at Canadian International School Astana</p>
+            <img src="foto18.jpeg" class="card-image" alt="IELTS">
+            <span class="tag">English</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Creative Writing Contest</strong>
+        <div class="card-content">
+            <p>III place, Skillset School — unique author style</p>
+            <img src="foto19.jpeg" class="card-image" alt="Writing">
+            <span class="tag">Writing</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>British Bulldog</strong>
+        <div class="card-content">
+            <p>International English language game contest participant</p>
+            <img src="foto20.jpeg" class="card-image" alt="Bulldog">
+            <span class="tag">English</span>
+        </div>
+    </div>
+    <div class="card">
+        <strong>Kangaroo Linguist (2019)</strong>
+        <div class="card-content">
+            <p>International linguistics contest participant</p>
+            <img src="foto21.jpeg" class="card-image" alt="Kangaroo">
+            <span class="tag">Languages</span>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="fade">
+    <h2>Cognitive Skills</h2>
+    <div class="grid">
+        <div class="card">
+            <strong>Mental Arithmetic — ADVANCE Level II, C1</strong>
+            <div class="card-content">
+                <p>Certificate and completion of Level II</p>
+                <img src="foto22.jpeg" class="card-image" alt="Arithmetic">
+                <span class="tag">Cognitive</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <strong>Mental Arithmetic — ADVANCE II</strong>
+            <div class="card-content">
+                <p>Certificate and completion of Level II</p>
+                <img src="foto23.jpeg" class="card-image" alt="Arithmetic">
+                <span class="tag">Cognitive</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <strong>Mental Arithmetic — ADVANCE Level D</strong>
+            <div class="card-content">
+                <p>Certificate and completion of Level D</p>
+                <img src="foto24.jpeg" class="card-image" alt="Arithmetic">
+                <span class="tag">Cognitive</span>
+            </div>
+        </div>
+    </div> </section> 
+</section>
+
+
+<script>
+// EXPAND CARDS
+document.querySelectorAll(".card").forEach(c=>{
+    c.onclick=()=>c.classList.toggle("active");
+});
+
+// GSAP FADE-IN
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray(".fade").forEach(el=>{
+    gsap.to(el,{
+        opacity:1,
+        y:0,
+        duration:1,
+        scrollTrigger:{
+            trigger:el,
+            start:"top 80%"
+        }
+    });
+});
+</script>
+<div class="fade" style="text-align: center; margin-top: 120px;">
+    <h1 style="font-family:'Playfair Display', serif; font-size: clamp(4rem, 10vw, 6rem); color:var(--pink); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 5px;">HOBBIES</h1>
+</div>
+
+<section class="fade" style="background: none; border: none; backdrop-filter: none; padding-top: 0;">
+    <div class="grid">
+        
+        <div class="card hobby-card">
+            <h3>Travel Journals</h3>
+            <div class="custom-slider" id="travel-slider">
+                <button class="arrow prev" onclick="moveSlider('travel-slider', -1)">&#10094;</button>
+                <div class="slider-viewport">
+                    <img src="travel1.jpeg" class="slide active" data-desc="Barcelona, Sagrada Família 2025">
+                    <img src="travel2.jpeg" class="slide" data-desc="Vatican City 2025">
+                    <img src="travel3.jpeg" class="slide" data-desc="Istanbul 2023">
+                    <img src="travel4.jpeg" class="slide" data-desc="Kuşadası 2023">
+                    <img src="travel5.jpeg" class="slide" data-desc="Istanbul 2023">
+                    <img src="travel6.jpeg" class="slide" data-desc="Japan 2018">
+                    <img src="travel7.jpeg" class="slide" data-desc="Japan 2018">
+                    <img src="travel8.jpeg" class="slide" data-desc="Athens, Greece 2023">
+                    <img src="travel9.jpeg" class="slide" data-desc="Rome, Colosseum 2025">
+                    <img src="travel10.jpeg" class="slide" data-desc="Genoa 2025">
+                    <img src="travel11.jpeg" class="slide" data-desc="Marseille 2025">
+                    <img src="travel12.jpeg" class="slide" data-desc="Barcelona, Sagrada Família">
+                    <img src="travel13.jpeg" class="slide" data-desc="Cagliari 2025">
+                    <img src="travel14.jpeg" class="slide" data-desc="Ibiza 2025">
+                    <img src="travel15.jpeg" class="slide" data-desc="Dubai 2024">
+                    <img src="travel16.jpeg" class="slide" data-desc="Oman 2024">
+                </div>
+                <button class="arrow next" onclick="moveSlider('travel-slider', 1)">&#10095;</button>
+                <p class="caption">Barcelona, Sagrada Família 2025</p>
+            </div>
+        </div>
+
+       <div class="card hobby-card">
+            <h3>My Dogs</h3>
+            <div class="custom-slider" id="dog-slider">
+                <button class="arrow prev" onclick="moveSlider('dog-slider', -1)">&#10094;</button>
+                <div class="slider-viewport">
+                    <img src="dog1.jpeg" class="slide active">
+                    <img src="dog2.jpeg" class="slide">
+                    <img src="dog3.jpeg" class="slide">
+                    <img src="dog4.jpeg" class="slide">
+                    <img src="dog5.jpeg" class="slide">
+                    <img src="dog6.jpeg" class="slide">
+                    <img src="dog7.jpeg" class="slide">
+                    <img src="dog8.jpeg" class="slide">
+                    <img src="dog9.jpeg" class="slide">
+                    <img src="dog10.jpeg" class="slide">
+                </div>
+                <button class="arrow next" onclick="moveSlider('dog-slider', 1)">&#10095;</button>
+                <p class="caption">Pomeranian Kennel</p>
+            </div>
+        </div>
+
+        <div class="card hobby-card">
+            <h3>Art Galleries</h3>
+            <div class="custom-slider" id="gallery-slider">
+                <button class="arrow prev" onclick="moveSlider('gallery-slider', -1)">&#10094;</button>
+                <div class="slider-viewport">
+                    <img src="gal4.jpeg" class="slide active" data-desc="Claude Monet, Has Sanat Gallery, Astana">
+                    <img src="gal1.jpeg" class="slide" data-desc="'The Other Side of the Forest' by Lu Lin, Has Sanat Gallery, Astana">
+                    <img src="gal2.jpeg" class="slide" data-desc="'The Other Side of the Forest' by Lu Lin, Has Sanat Gallery, Astana">
+                    <img src="gal8.jpeg" class="slide" data-desc="Art Exhibition, Istanbul">
+                    <img src="gal5.jpeg" class="slide" data-desc="Vincent van Gogh, Has Sanat Gallery, Astana">
+                </div>
+                <button class="arrow next" onclick="moveSlider('gallery-slider', 1)">&#10095;</button>
+                <p class="caption">Claude Monet, Has Sanat Gallery, Astana</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+/* CSS ДЛЯ ХОББИ И СЛАЙДЕРА */
+.hobby-card {
+    cursor: default !important;
+    background: rgba(17, 17, 17, 0.7) !important;
+    border: 1px solid rgba(255, 107, 157, 0.2) !important;
+    padding: 25px !important;
+    overflow: hidden;
+    border-radius: 30px;
+}
+
+.hobby-card:hover {
+    box-shadow: 0 0 25px rgba(255, 107, 157, 0.3) !important;
+    transform: none !important; /* Убираем наклон, чтобы слайдер работал стабильно */
+}
+
+.custom-slider {
+    position: relative;
+    width: 100%;
+}
+
+/* Контейнер теперь подстраивается под высоту контента */
+.slider-viewport {
+    width: 100%;
+    height: auto;          /* Убираем 320px */
+    min-height: 200px;     /* Минимальная высота, чтобы блок не схлопнулся */
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.slide {
+    width: 100%;
+    height: auto;          /* Высота по пропорциям фото */
+    position: relative;    /* Меняем absolute на relative, чтобы контейнер видел высоту */
+    display: none;         /* Скрываем все */
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.slide.active {
+    display: block;        /* Показываем только активное */
+    opacity: 1;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--pink);
+    font-size: 2.2rem;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    transition: all 0.4s ease;
+    padding: 15px;
+    user-select: none;
+}
+
+.custom-slider:hover .arrow {
+    opacity: 0.6;
+}
+
+.arrow:hover {
+    opacity: 1 !important;
+    color: var(--soft);
+    transform: translateY(-50%) scale(1.2);
+}
+
+.prev { left: 0; }
+.next { right: 0; }
+
+.caption {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--soft);
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    min-height: 45px;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .slider-viewport { height: 280px; }
+    .arrow { opacity: 0.5; }
+}
+</style>
+
+<script>
+function moveSlider(sliderId, direction) {
+    const container = document.getElementById(sliderId);
+    if(!container) return;
+    
+    const slides = container.querySelectorAll('.slide');
+    const caption = container.querySelector('.caption');
+    
+    let currentIndex = Array.from(slides).findIndex(s => s.classList.contains('active'));
+    
+    // Безопасная проверка: если активный слайд не найден
+    if(currentIndex === -1) currentIndex = 0;
+
+    slides[currentIndex].classList.remove('active');
+    
+    currentIndex += direction;
+    if (currentIndex >= slides.length) currentIndex = 0;
+    if (currentIndex < 0) currentIndex = slides.length - 1;
+    
+    const nextSlide = slides[currentIndex];
+    nextSlide.classList.add('active');
+    
+    if (caption) {
+        const newDesc = nextSlide.getAttribute('data-desc');
+        if (newDesc) {
+            caption.innerText = newDesc;
+        } else if (sliderId === 'dog-slider') {
+            caption.innerText = "Pomeranian Kennel";
+        } else {
+            caption.innerText = "";
+        }
+    }
+}
+</script>
+<!-- PORTFOLIO STATISTICS -->
+<section class="fade">
+<h2>Portfolio Statistics</h2>
+<p style="font-size:1.1rem;">
+• Science & Psychology: 4 items (including deep research & author test)<br>
+• Digital Art & IT: 6 items (courses, animation, web dev, costume contest)<br>
+• Sports & Athletics: 5 items (KMS fencing, karate, etc.)<br>
+• Performance & Creative: 4 items (dance & vocal)<br>
+• Languages & Literature: 6 items (English, Spanish & writing awards)<br>
+• Cognitive Skills: 2 items (mental arithmetic)
+</p>
+</section>
+
+<section class="fade">
+    <h2>Contact Me</h2>
+    <p style="font-size:1.1rem;">Feel free to write me for any questions, collaborations, or projects</p>
+    <p style="font-size:1.1rem;">
+        <a href="mailto:azhar.manabay@gmail.com" style="color:var(--pink); text-decoration:none;">azhar.manabay@gmail.com</a>
+    </p>
+</section>
+<script>
+// EXPAND CARDS
+document.querySelectorAll(".card").forEach(c=>{
+    c.onclick=()=>c.classList.toggle("active");
+});
+
+// GSAP FADE-IN
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray(".fade").forEach(el=>{
+    gsap.to(el,{
+        opacity:1,
+        y:0,
+        duration:1,
+        scrollTrigger:{
+            trigger:el,
+            start:"top 80%"
+        }
+    });
+});
+</script>
+</body>
+</html>
